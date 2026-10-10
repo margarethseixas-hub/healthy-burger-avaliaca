@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Burger | Avaliação Confidencial</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f1d16',
+                            DEFAULT: '#16281f',
+                            light: '#233d31',
+                            accent: '#d4c5a9',
+                            cream: '#f4ede2',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-brand-cream h-full flex flex-col font-sans selection:bg-brand-accent selection:text-brand-dark">
+
+    <header class="border-b border-brand-light/30 bg-brand/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full border border-brand-accent/50 flex items-center justify-center bg-brand-light shadow">
+                    <i class="fa-solid fa-burger text-brand-accent text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold tracking-widest text-white">HEALTHY BURGER</h1>
+                    <p class="text-[10px] sm:text-xs text-brand-accent tracking-wider">AVALIAÇÃO 100% ANÔNIMA & CONFIDENCIAL</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Botão de Compartilhar -->
+                <button onclick="openShareModal()" class="flex items-center gap-2 bg-brand-accent hover:bg-[#e3d4b8] text-brand-dark px-3 py-2 rounded-xl font-bold text-xs transition-all shadow-md">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span class="hidden sm:inline">Compartilhar</span>
+                </button>
+                <!-- Botão Área do Gestor -->
+                <button onclick="openAdminModal()" class="flex items-center gap-2 bg-brand-light/80 hover:bg-brand-light text-brand-accent px-3 py-2 rounded-xl border border-brand-accent/30 font-bold text-xs transition-all">
+                    <i class="fa-solid fa-lock"></i>
+                    <span class="hidden sm:inline">Gestor</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+        <!-- Hero Card -->
+        <section class="mb-8 text-center bg-gradient-to-b from-brand-light/40 to-brand-light/10 border border-brand-light/50 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-leaf text-9xl text-brand-accent"></i>
+            </div>
+            <div class="max-w-xl mx-auto">
+                <span class="inline-block bg-brand-accent/10 text-brand-accent text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3 border border-brand-accent/20">
+                    Sua opinião nos faz crescer
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">Como foi sua experiência hoje?</h2>
+                <p class="text-brand-cream/80 text-xs sm:text-sm leading-relaxed">
+                    Não solicitamos seu nome. Selecione o que você consumiu do nosso cardápio e avalie com total liberdade e confidencialidade.
+                </p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <form id="confidentialForm" onsubmit="submitConfidentialReview(event)" class="space-y-8 bg-brand/50 border border-brand-light/70 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            
+            <!-- Step 1: Select Products -->
+            <div>
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-brand-light/60">
+                    <span class="w-7 h-7 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center font-bold text-xs">1</span>
+                    <h3 class="text-base sm:text-lg font-bold text-white">O que você comprou e consumiu?</h3>
+                </div>
+                <p class="text-xs text-brand-cream/70 mb-4">Selecione um ou mais itens do nosso cardápio que fazem parte do seu pedido:</p>
+
+                <div class="space-y-6">
+                    <!-- Artesanais -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-wider font-semibold text-brand-accent mb-2.5 flex items-center gap-1.5">
+                            <i class="fa-solid fa-fire"></i> Hambúrgueres Artesanais
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Soja" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hambúrguer de Soja</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 16,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Grão de Bico" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hambúrguer de Grão de Bico</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 18,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Lentilha" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hambúrguer de Lentilha</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 18,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Branco" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hambúrguer de Feijão Branco</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 16,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Carioca" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hambúrguer de Feijão Carioca</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 15,00</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Proteínas Congeladas -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-wider font-semibold text-brand-accent mb-2.5 flex items-center gap-1.5">
+                            <i class="fa-solid fa-snowflake"></i> Proteínas Congeladas
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Soja Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Soja Congelado</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 5,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Grão de Bico Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Grão de Bico Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 6,50</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Lentilha Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Lentilha Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 6,50</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Branco Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Feijão Branco Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 5,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Carioca Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Feijão Carioca Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 5,00</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Preto Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Feijão Preto Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 5,50</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Hambúrguer de Feijão Jalo Congelado" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Hamb. Feijão Jalo Cong.</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 5,50</span>
+                            </label>
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Almôndegas Congeladas (6 un.)" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Almôndegas Congeladas (6 un.)</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 15,00</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bebidas -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-wider font-semibold text-brand-accent mb-2.5 flex items-center gap-1.5">
+                            <i class="fa-solid fa-glass-water"></i> Bebidas Naturais
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <label class="product-card flex items-center justify-between p-3 rounded-xl border border-brand-light bg-brand-dark/40 hover:border-brand-accent/50 cursor-pointer transition-all">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" name="products" value="Suco de Pitaia com Morango" class="w-4 h-4 accent-[#d4c5a9] rounded">
+                                    <span class="text-xs font-medium text-white">Suco de Pitaia com Morango</span>
+                                </div>
+                                <span class="text-[11px] text-brand-accent font-semibold">R$ 13,00</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Ratings per Category -->
+            <div class="pt-4 border-t border-brand-light/60">
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-brand-light/60">
+                    <span class="w-7 h-7 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center font-bold text-xs">2</span>
+                    <h3 class="text-base sm:text-lg font-bold text-white">Avaliação dos Quesitos</h3>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Sabor -->
+                    <div class="bg-brand-dark/40 border border-brand-light p-4 rounded-2xl text-center">
+                        <label class="block text-xs font-semibold text-brand-accent uppercase tracking-wider mb-2">Sabor & Qualidade</label>
+                        <div class="flex justify-center gap-1.5" id="starsSabor">
+                            <button type="button" onclick="setCategoryRating('sabor', 1)" class="star-sabor text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('sabor', 2)" class="star-sabor text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('sabor', 3)" class="star-sabor text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('sabor', 4)" class="star-sabor text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('sabor', 5)" class="star-sabor text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <input type="hidden" id="ratingSabor" value="5">
+                    </div>
+
+                    <!-- Atendimento -->
+                    <div class="bg-brand-dark/40 border border-brand-light p-4 rounded-2xl text-center">
+                        <label class="block text-xs font-semibold text-brand-accent uppercase tracking-wider mb-2">Atendimento</label>
+                        <div class="flex justify-center gap-1.5" id="starsAtendimento">
+                            <button type="button" onclick="setCategoryRating('atendimento', 1)" class="star-atendimento text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('atendimento', 2)" class="star-atendimento text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('atendimento', 3)" class="star-atendimento text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('atendimento', 4)" class="star-atendimento text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('atendimento', 5)" class="star-atendimento text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <input type="hidden" id="ratingAtendimento" value="5">
+                    </div>
+
+                    <!-- Custo-Benefício -->
+                    <div class="bg-brand-dark/40 border border-brand-light p-4 rounded-2xl text-center">
+                        <label class="block text-xs font-semibold text-brand-accent uppercase tracking-wider mb-2">Custo-Benefício</label>
+                        <div class="flex justify-center gap-1.5" id="starsCusto">
+                            <button type="button" onclick="setCategoryRating('custo', 1)" class="star-custo text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('custo', 2)" class="star-custo text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('custo', 3)" class="star-custo text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('custo', 4)" class="star-custo text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setCategoryRating('custo', 5)" class="star-custo text-xl text-brand-cream/30 hover:text-brand-accent"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <input type="hidden" id="ratingCusto" value="5">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Confidential Comment -->
+            <div class="pt-4 border-t border-brand-light/60">
+                <div class="flex items-center gap-2 mb-3 pb-2 border-b border-brand-light/60">
+                    <span class="w-7 h-7 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center font-bold text-xs">3</span>
+                    <h3 class="text-base sm:text-lg font-bold text-white">Comentário Confidencial (Opcional)</h3>
+                </div>
+                <p class="text-xs text-brand-cream/70 mb-3">Deseja relatar algo específico, sugerir melhorias ou elogiar a equipe? Escreva aqui sem preocupações.</p>
+                <textarea id="confidentialComment" rows="4" placeholder="Ex: O lanche estava excelente, mas a entrega poderia ser um pouco mais rápida..." class="w-full bg-brand-dark border border-brand-light rounded-2xl p-4 text-xs sm:text-sm text-white placeholder-brand-cream/40 focus:outline-none focus:border-brand-accent transition-colors resize-none"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="w-full bg-brand-accent hover:bg-[#e3d4b8] text-brand-dark font-bold py-4 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base">
+                    <i class="fa-solid fa-lock"></i> Enviar Avaliação Confidencial
+                </button>
+                <p class="text-center text-[10px] text-brand-cream/50 mt-2.5">
+                    <i class="fa-solid fa-shield-halved"></i> Garantia de sigilo absoluto. Seus dados pessoais nunca serão solicitados ou vinculados.
+                </p>
+            </div>
+        </form>
+    </main>
+
+    <!-- Modal de Compartilhamento -->
+    <div id="shareModal" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-brand border border-brand-light rounded-3xl p-6 max-w-md w-full shadow-2xl relative">
+            <button onclick="closeShareModal()" class="absolute top-4 right-4 text-brand-cream/60 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-brand-light border border-brand-accent/40 flex items-center justify-center mx-auto mb-3 text-brand-accent">
+                    <i class="fa-solid fa-share-nodes text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">Compartilhar Pesquisa</h3>
+                <p class="text-xs text-brand-cream/70 mt-1">Cole abaixo o link do seu site publicado para gerar o link oficial para seus clientes:</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[11px] text-brand-accent font-semibold mb-1">Link do seu site na internet:</label>
+                    <div class="flex items-center gap-2 bg-brand-dark p-2 rounded-xl border border-brand-light">
+                        <input type="text" id="shareUrl" class="bg-transparent text-xs text-brand-cream flex-grow outline-none px-2" placeholder="https://seudominio.com ou link do Netlify/Vercel" oninput="updateShareLinks(this.value)">
+                        <button onclick="copyShareUrl()" class="bg-brand-accent hover:bg-[#e3d4b8] text-brand-dark px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap">
+                            <i class="fa-regular fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-brand-cream/50 mt-1">Dica: Publique grátis no Netlify ou Vercel e cole o link gerado aqui.</p>
+                </div>
+
+                <a id="whatsappShareBtn" href="#" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Enviar pelo WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Área do Gestor (Respostas) -->
+    <div id="adminModal" class="fixed inset-0 bg-brand-dark/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-brand border border-brand-light rounded-3xl p-6 max-w-2xl w-full shadow-2xl relative max-h-[90vh] flex flex-col">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-brand-cream/60 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-brand-light">
+                <div class="w-10 h-10 rounded-full bg-brand-light border border-brand-accent/40 flex items-center justify-center text-brand-accent">
+                    <i class="fa-solid fa-user-secret"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white">Painel do Gestor (Respostas Anônimas)</h3>
+                    <p class="text-[11px] text-brand-accent">Visualize todas as avaliações confidenciais recebidas</p>
+                </div>
+            </div>
+
+            <!-- Lista de Feedbacks -->
+            <div id="adminFeedList" class="flex-grow overflow-y-auto space-y-3 pr-2">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-brand-light border border-brand-accent/50 text-white px-5 py-3 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-brand-accent text-lg"></i>
+        <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-brand-accent">Sucesso!</h4>
+            <p id="toastMsg" class="text-xs text-brand-cream">Ação realizada com sucesso.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-brand-light/30 py-6 text-center text-xs text-brand-cream/50 bg-brand/50">
+        <p>&copy; 2026 Healthy Burger. Todos os direitos reservados. Good Food • Better Life.</p>
+    </footer>
+
+    <script>
+        // Dados de avaliações anônimas iniciais armazenadas em memória
+        let reviews = [
+            {
+                id: 1,
+                products: ['Hambúrguer de Grão de Bico', 'Suco de Pitaia com Morango'],
+                sabor: 5,
+                atendimento: 5,
+                custo: 5,
+                comment: 'O hambúrguer de grão de bico é espetacular! O suco veio super gelado e bem natural. Continuem assim.',
+                date: 'Hoje às 18:30'
+            },
+            {
+                id: 2,
+                products: ['Hambúrguer de Lentilha Congelado'],
+                sabor: 5,
+                atendimento: 4,
+                custo: 5,
+                comment: 'Comprei as unidades congeladas para fazer em casa durante a semana. Prático, saudável e muito saboroso.',
+                date: 'Ontem às 14:15'
+            },
+            {
+                id: 3,
+                products: ['Almôndegas Congeladas (6 un.)'],
+                sabor: 4,
+                atendimento: 5,
+                custo: 4,
+                comment: 'Adorei as almôndegas vegetais. Excelente opção para refeições rápidas e leves.',
+                date: 'Há 3 dias'
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setCategoryRating('sabor', 5);
+            setCategoryRating('atendimento', 5);
+            setCategoryRating('custo', 5);
+            
+            // Definir URL inicial inteligente (se estiver em localhost, sugere placeholder ou usa a atual se pública)
+            let currentUrl = window.location.href;
+            if (currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1') || currentUrl.includes('about:blank')) {
+                currentUrl = "https://seu-healthy-burger.netlify.app";
+            }
+            document.getElementById('shareUrl').value = currentUrl;
+            updateShareLinks(currentUrl);
+        });
+
+        function updateShareLinks(url) {
+            if (!url) url = "https://seu-healthy-burger.netlify.app";
+            const msg = encodeURIComponent("Olá! Por favor, avalie sua experiência no Healthy Burger de forma rápida e 100% confidencial aqui: " + url);
+            document.getElementById('whatsappShareBtn').href = `https://api.whatsapp.com/send?text=${msg}`;
+        }
+
+        // Controle de estrelas por categoria
+        function setCategoryRating(category, rating) {
+            document.getElementById(`rating${category.charAt(0).toUpperCase() + category.slice(1)}`).value = rating;
+            const buttons = document.querySelectorAll(`.star-${category}`);
+            buttons.forEach((btn, index) => {
+                if (index < rating) {
+                    btn.classList.remove('text-brand-cream/30');
+                    btn.classList.add('text-brand-accent');
+                } else {
+                    btn.classList.remove('text-brand-accent');
+                    btn.classList.add('text-brand-cream/30');
+                }
+            });
+        }
+
+        // Submissão do Formulário
+        function submitConfidentialReview(e) {
+            e.preventDefault();
+
+            const checkboxes = document.querySelectorAll('input[name="products"]:checked');
+            const selectedProducts = Array.from(checkboxes).map(cb => cb.value);
+
+            if (selectedProducts.length === 0) {
+                showToast('Selecione pelo menos um produto consumido!');
+                return;
+            }
+
+            const sabor = parseInt(document.getElementById('ratingSabor').value);
+            const atendimento = parseInt(document.getElementById('ratingAtendimento').value);
+            const custo = parseInt(document.getElementById('ratingCusto').value);
+            const comment = document.getElementById('confidentialComment').value.trim();
+
+            const newReview = {
+                id: Date.now(),
+                products: selectedProducts,
+                sabor: sabor,
+                atendimento: atendimento,
+                custo: custo,
+                comment: comment || 'Avaliação enviada sem comentário adicional.',
+                date: 'Agora mesmo'
+            };
+
+            reviews.unshift(newReview);
+
+            // Resetar formulário
+            document.getElementById('confidentialForm').reset();
+            setCategoryRating('sabor', 5);
+            setCategoryRating('atendimento', 5);
+            setCategoryRating('custo', 5);
+
+            showToast('Obrigado! Sua opinião confidencial foi registrada com segurança.');
+        }
+
+        // Modais de Compartilhamento e Gestor
+        function openShareModal() {
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+        function copyShareUrl() {
+            const copyText = document.getElementById('shareUrl');
+            copyText.select();
+            document.execCommand('copy');
+            showToast('Link copiado para a área de transferência!');
+        }
+
+        function openAdminModal() {
+            renderAdminFeed();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        // Renderizar Painel do Gestor
+        function renderAdminFeed() {
+            const container = document.getElementById('adminFeedList');
+            container.innerHTML = '';
+
+            if (reviews.length === 0) {
+                container.innerHTML = '<p class="text-center text-xs text-brand-cream/50 py-8">Nenhuma avaliação registrada ainda.</p>';
+                return;
+            }
+
+            reviews.forEach(review => {
+                const badgeHTML = review.products.map(p => `<span class="bg-brand-light text-brand-accent text-[10px] px-2 py-0.5 rounded-md border border-brand-accent/20">${escapeHtml(p)}</span>`).join('');
+                
+                const card = document.createElement('div');
+                card.className = 'bg-brand-dark/60 border border-brand-light p-4 rounded-2xl shadow-md';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-semibold text-brand-accent flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-secret"></i> Anônimo
+                        </span>
+                        <span class="text-[10px] text-brand-cream/50">${review.date}</span>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        ${badgeHTML}
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 py-1.5 mb-2 bg-brand/40 rounded-xl px-3 border border-brand-light/50 text-center">
+                        <div>
+                            <span class="block text-[9px] text-brand-cream/60 uppercase">Sabor</span>
+                            <span class="text-xs font-bold text-brand-accent">${review.sabor} <i class="fa-solid fa-star text-[9px]"></i></span>
+                        </div>
+                        <div>
+                            <span class="block text-[9px] text-brand-cream/60 uppercase">Atend.</span>
+                            <span class="text-xs font-bold text-brand-accent">${review.atendimento} <i class="fa-solid fa-star text-[9px]"></i></span>
+                        </div>
+                        <div>
+                            <span class="block text-[9px] text-brand-cream/60 uppercase">Custo</span>
+                            <span class="text-xs font-bold text-brand-accent">${review.custo} <i class="fa-solid fa-star text-[9px]"></i></span>
+                        </div>
+                    </div>
+
+                    <p class="text-brand-cream/90 text-xs leading-relaxed">${escapeHtml(review.comment)}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Notificação Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // Segurança XSS
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>
